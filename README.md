@@ -47,9 +47,19 @@
   ```
   Exited with:
   ```python
-  exit()
+  quit
+  ```
+
+## 📌 Ipython
+- OpenedIPython Lto test setup:
+  ```bash
+  Ipython
+  ```
+  Exited with:
+  ```python
+  quit
   ```
 
 ---
 
-✅ This file is for keeping track of each step done in the **CareerFoundry Python for Web Developers – Achievement 1, Exercise 1.1**.
+✅ This file is for keeping track of each step done in the **CareerFoundry Python for Web Developers**.
