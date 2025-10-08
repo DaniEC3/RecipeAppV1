@@ -18,19 +18,11 @@ def take_recipe():
 
     recipes_list.append(recipe)
     for ingredient in recipe["Ingredients"]:
-        print(ingredient)
-        print(ingredients_list)
         if ingredient not in ingredients_list:
             ingredients_list.extend([ingredient])
     main_data["recipes_list"] = recipes_list
     main_data["all_ingredients"] = ingredients_list
-    # print(f"Recipe '{recipe_name}' added successfully!")
-    # print("Current Recipes List:")
-    # for r in recipes_list:
-    #     print(r)
-    # print("Current Ingredients List:")
-    # print(ingredients_list)
-    print("🔎 Current object preview:", main_data)
+    # print("🔎 Current object preview:", main_data)
 
 def checking_user():
     user_input = input("Do you want to add a recipe? (yes/no): ").strip().lower()
@@ -61,7 +53,7 @@ def calc_difficult():
         elif recipe["Cooking Time (Minutes)"] >= 10 and len(recipe["Ingredients"]) >= 4:
             # print(f"{recipe['name']} is a hard recipe.")
             recipe["Difficulty"] = "Hard"
-    print("🔎 Current object preview with Difficulty levels:", recipes_list)
+    # print("🔎 Current object preview with Difficulty levels:", recipes_list)
        
 def showing_recipes():
     print("\nFinal Recipes List with Difficulty Levels:")
@@ -89,8 +81,6 @@ def load_file():
     try:
         with open(file_path, "r") as f:
             data = json.load(f)
-            print("🔎 Loaded object preview:", data)
-        
     except FileNotFoundError:
         print("No saved data found.")
     except Exception as e:
@@ -100,8 +90,8 @@ def load_file():
         main_data = data
         recipes_list = data["recipes_list"]
         ingredients_list = data["all_ingredients"]
-        print("📦 Recipes List:", main_data['recipes_list'])
-        print("🥕 Ingredients List:", ingredients_list)
+        # print("📦 Recipes List:", main_data['recipes_list'])
+        # print("🥕 Ingredients List:", ingredients_list)
 def save_file():
     try:
         with open('data.txt', 'w') as f:

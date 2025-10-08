@@ -44,7 +44,6 @@ def sorted_ingredients_list(all_ingredients):
     return index_ingredients
 
 def search_ingredients(all_ingredients, recipes_list):
-    ingredient_searched = []
     index_ingredients = sorted_ingredients_list(all_ingredients)
     try:
         number = int(input("Enter the number of the ingredient to search (or press Enter to skip): ").strip())
