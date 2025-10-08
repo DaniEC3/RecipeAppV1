@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540">
+  <style>
+    .title { font: bold 36px 'Segoe UI', sans-serif; fill: #1a5276; }
+    .subtitle { font: 22px 'Segoe UI', sans-serif; fill: #21618c; }
+    .code { font: 20px 'Fira Code', monospace; fill: #1b2631; }
+    .label { font: 18px 'Segoe UI', sans-serif; fill: #1b2631; }
+    .box { fill: #ebf5fb; stroke: #5dade2; stroke-width: 3; rx: 18; }
+  </style>
+  <rect width="960" height="540" fill="#fbfcfc" />
+  <text x="480" y="70" text-anchor="middle" class="title">Exercise 1.4 – Recipe Search Preview</text>
+  <rect x="100" y="120" width="760" height="120" class="box" />
+  <text x="480" y="160" text-anchor="middle" class="subtitle">1. Load JSON data</text>
+  <text x="130" y="195" class="code">load_recipes() ➜ recipes_list, all_ingredients</text>
+  <rect x="100" y="270" width="360" height="200" class="box" />
+  <text x="280" y="315" text-anchor="middle" class="subtitle">2. Search by Recipe Name</text>
+  <text x="130" y="350" class="code">display_recipe()</text>
+  <text x="130" y="380" class="code">• case-insensitive match</text>
+  <text x="130" y="410" class="code">• prints time, ingredients, difficulty</text>
+  <rect x="500" y="270" width="360" height="200" class="box" />
+  <text x="680" y="315" text-anchor="middle" class="subtitle">3. Explore by Ingredient</text>
+  <text x="530" y="350" class="code">sorted_ingredients_list()</text>
+  <text x="530" y="380" class="code">search_ingredients()</text>
+  <text x="530" y="410" class="code">• handles invalid choices</text>
+  <text x="480" y="500" text-anchor="middle" class="label">Console UI highlights matching recipes or warns when none are found.</text>
+</svg>

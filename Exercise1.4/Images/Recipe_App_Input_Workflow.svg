@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 540">
+  <style>
+    .title { font: bold 36px 'Segoe UI', sans-serif; fill: #2c3e50; }
+    .subtitle { font: 22px 'Segoe UI', sans-serif; fill: #34495e; }
+    .code { font: 20px 'Fira Code', monospace; fill: #2d3436; }
+    .label { font: 18px 'Segoe UI', sans-serif; fill: #2d3436; }
+    .box { fill: #ecf0f1; stroke: #3498db; stroke-width: 3; rx: 18; }
+  </style>
+  <rect width="960" height="540" fill="#fefefe" />
+  <text x="480" y="70" text-anchor="middle" class="title">Exercise 1.4 – Recipe Input Flow</text>
+  <rect x="80" y="110" width="360" height="140" class="box" />
+  <text x="260" y="155" text-anchor="middle" class="subtitle">1. Load Saved Data</text>
+  <text x="110" y="190" class="code">load_file() ➜ reads data.txt</text>
+  <text x="110" y="220" class="code">recipes_list, all_ingredients</text>
+  <rect x="520" y="110" width="360" height="140" class="box" />
+  <text x="700" y="155" text-anchor="middle" class="subtitle">2. Collect User Recipes</text>
+  <text x="550" y="190" class="code">take_recipe() ➜ prompts for name,</text>
+  <text x="550" y="220" class="code">cooking time, comma-separated ingredients</text>
+  <rect x="80" y="280" width="360" height="150" class="box" />
+  <text x="260" y="325" text-anchor="middle" class="subtitle">3. Classify Difficulty</text>
+  <text x="110" y="360" class="code">calc_difficult() ➜ Easy / Medium /</text>
+  <text x="110" y="390" class="code">Intermediate / Hard</text>
+  <rect x="520" y="280" width="360" height="150" class="box" />
+  <text x="700" y="325" text-anchor="middle" class="subtitle">4. Display &amp; Save</text>
+  <text x="550" y="360" class="code">showing_recipes(), showing_ingredients()</text>
+  <text x="550" y="390" class="code">save_file() ➜ data.txt</text>
+  <text x="480" y="470" text-anchor="middle" class="label">Console printouts preview each stage of the workflow.</text>
+</svg>
