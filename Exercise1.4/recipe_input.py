@@ -1,4 +1,4 @@
-import json
+import pickle
 
 main_data = {}
 recipes_list = []
@@ -79,23 +79,23 @@ def load_file():
     file_path = input("Enter the path to the data file: ")
     global recipes_list, ingredients_list
     try:
-        with open(file_path, "r") as f:
-            data = json.load(f)
+        with open(file_path, "rb") as f:
+            data = pickle.load(f)
     except FileNotFoundError:
         print("No saved data found.")
     except Exception as e:
         print("An error occurred while loading the data. Starting fresh.")
         print("Error details:", e)
     finally:
-        main_data = data
         recipes_list = data["recipes_list"]
         ingredients_list = data["all_ingredients"]
         # print("📦 Recipes List:", main_data['recipes_list'])
         # print("🥕 Ingredients List:", ingredients_list)
-def save_file():
+        return file_path
+def save_file(file_path):
     try:
-        with open('data.txt', 'w') as f:
-            json.dump(main_data, f)
+        with open(file_path, 'wb') as f:
+            pickle.dump(main_data, f)
         print("Data saved to data.txt")
     except Exception as e:
         print("An error occurred while saving the data.")
@@ -104,12 +104,12 @@ def save_file():
         print("Exiting the Recipe App. Goodbye!")
 
 print("Welcome to the Recipe App!")
-load_file()
+file_path = load_file()
 checked = checking_user()
 if checked :
     calc_difficult()
     showing_recipes()
     showing_ingredients()
-    save_file()
+    save_file(file_path)
 
 

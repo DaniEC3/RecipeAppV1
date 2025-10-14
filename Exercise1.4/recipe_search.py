@@ -1,10 +1,10 @@
-import json
+import pickle
 
 def load_recipes():
     file_path = input("Enter the path to the data file: ")
     try:
-        with open(file_path, "r") as f:
-            data = json.load(f)
+        with open(file_path, "rb") as f:
+            data = pickle.load(f)
     except FileNotFoundError:
         print("No saved data found.")
     except Exception as e:
