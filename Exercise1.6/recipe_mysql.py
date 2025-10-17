@@ -4,6 +4,7 @@ import mysql.connector
 main_data = {}
 recipes_list = []
 ingredients_list = []
+
 conn = mysql.connector.connect(
 host='localhost',
 user='cf-python',
@@ -97,7 +98,7 @@ def calc_difficult():
         else:  
             recipe["Difficulty"] = "Hard"
        
-def search_recipes_by_name(recipes_list, all_ingredients):
+def search_recipes_by_name(recipes_list):
     recipe_name = input("Enter the recipe name to search: ").strip().lower()
     found = False
     for recipe in recipes_list:
@@ -134,23 +135,21 @@ def search_recipes_by_ingredient(all_ingredients, recipes_list):
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
     else:
-        recipes_matching = []
-        title = False
-        for recipe in recipes_list:
-            if ingredient_name in recipe["Ingredients"]:
-                if not title:
-                    print(f"\nRecipes containing '{ingredient_name}':")
-                    title = True
+        cursor.execute("SELECT name, ingredients, cook_time, difficulty FROM recipes WHERE ingredients LIKE %s", (f"%{ingredient_name}%",))
+        rows = cursor.fetchall()
+        print(rows)
+        if rows:
+            print(f"\nRecipes containing '{ingredient_name}':")
+            for row in rows:
                 print("------------------------\n")
-                print("Recipe Name:", recipe["name"], "\n")
-                print("Cooking Time (Minutes):", recipe["Cooking Time (Minutes)"])
+                print("Recipe Name:", row[0], "\n")
+                print("Cooking Time (Minutes):", row[2])
                 print("Ingredients:")
-                for ingredient in recipe["Ingredients"]:
-                    print("-", ingredient)
-                print("Difficulty Level:", recipe.get("Difficulty", "Not Assigned"))
+                for ingredient in row[1].split(','):
+                    print("-", ingredient.strip())
+                print("Difficulty Level:", row[3])
                 print("------------------------\n")
-                recipes_matching.append(recipe["name"])
-        if not recipes_matching:
+        else:
             print(f"No recipes found containing the ingredient '{ingredient_name}'.")
 
 def print_sorted_ingredients_list(all_ingredients):
@@ -202,7 +201,6 @@ def main_menu():
     else:
         print("Exiting the Recipe App. Goodbye!") 
         exit()
-
 
 def main():
   initialize_app()
