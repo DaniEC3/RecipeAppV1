@@ -53,6 +53,7 @@ def showing_ingredients():
     print("\nUnique Ingredients List:")
     print("------------------------")
     sorted_ingredients = sorted(ingredients_list)
+    print(sorted_ingredients)
     for ingredient in sorted_ingredients:
         print("-", ingredient)  
     print("------------------------\n")
@@ -163,6 +164,55 @@ def print_sorted_ingredients_list(all_ingredients):
     print("------------------------\n")
     return index_ingredients
 
+def update_recipe():
+
+  print("----- Update a Recipe -----\n")
+  print("Recipes List:\n")
+  count = 1
+  for recipe in recipes_list:
+      print(f"{count}. {recipe['name']}")
+      count += 1
+  try:
+    recipe_to_udpate = int(input("Choose a recipe to update by number:"))
+    while recipe_to_udpate < 1 or recipe_to_udpate > len(recipes_list):
+        recipe_to_udpate = int(input("Invalid choice. Please choose a valid recipe number:"))
+    column = int(input("Choose the column to update:\n1. Name\n2. Cooking Time\n3. Ingredients\n"))
+    while column < 1 or column > 3:
+        column = int(input("Invalid choice. Please choose a valid column number (1-3):"))
+    if column == 1:
+        new_name = str(input("Enter the new name:"))
+        recipes_list[recipe_to_udpate - 1]['name'] = new_name
+    elif column == 2:
+        new_cook_time = int(input("Enter the new cooking time (in minutes):"))
+        recipes_list[recipe_to_udpate - 1]['Cooking Time (Minutes)'] = new_cook_time
+    else:
+        old_ingredients = recipes_list[recipe_to_udpate - 1]['Ingredients']
+        for ingredient in old_ingredients:
+            if ingredient in ingredients_list:
+                ingredients_list.remove(ingredient)
+
+        new_ingredients = input("Enter the new ingredients (comma-separated):").split(',')
+        recipes_list[recipe_to_udpate - 1]['Ingredients'] = [ingredient.strip() for ingredient in new_ingredients]
+        for ingredient in recipes_list[recipe_to_udpate - 1]['Ingredients']:
+            if ingredient not in ingredients_list:
+                ingredients_list.append(ingredient)
+  except ValueError:
+    print("Invalid input. Please enter a valid number.")
+  except Exception as e:
+    print(f"An unexpected error occurred: {e}")
+  else:
+    calc_difficult()
+    cursor.execute("UPDATE recipes SET name = %s, ingredients = %s, cook_time = %s, difficulty = %s WHERE id = %s",
+                   (recipes_list[recipe_to_udpate - 1]['name'],
+                    ",".join(recipes_list[recipe_to_udpate - 1]['Ingredients']),
+                    recipes_list[recipe_to_udpate - 1]['Cooking Time (Minutes)'],
+                    recipes_list[recipe_to_udpate - 1]['Difficulty'],
+                    recipe_to_udpate))
+  finally:
+    conn.commit()
+    print("Recipe updated successfully!\n")
+    
+    
 def main_menu():
     print("//================Recipe App Menu ================\\\\\n")
     opt = int(input('''Choose an option (1-8):\n
@@ -193,7 +243,7 @@ def main_menu():
         search_recipes_by_ingredient(ingredients_list, recipes_list)
         main_menu()
     elif opt == 6:  
-        print("Update a recipe - Feature coming soon!")
+        update_recipe()
         main_menu()
     elif opt == 7:  
         print("Delete a recipe - Feature coming soon!")
