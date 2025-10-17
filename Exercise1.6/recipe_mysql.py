@@ -53,7 +53,6 @@ def showing_ingredients():
     print("\nUnique Ingredients List:")
     print("------------------------")
     sorted_ingredients = sorted(ingredients_list)
-    print(sorted_ingredients)
     for ingredient in sorted_ingredients:
         print("-", ingredient)  
     print("------------------------\n")
@@ -212,9 +211,49 @@ def update_recipe():
     conn.commit()
     print("Recipe updated successfully!\n")
     
+def delete_recipe():
+  print("----- Delete a Recipe -----\n")
+  print("Recipes List:\n")
+  
+  for i,recipe in enumerate(recipes_list, start=1):
+      print(f"{i}. {recipe['name']}")
+      
+  try:
+    recipe_to_delete = int(input("Choose a recipe to delete by number:"))
+    while recipe_to_delete < 1 or recipe_to_delete > len(recipes_list):
+        recipe_to_delete = int(input("Invalid choice. Please choose a valid recipe number:"))
+  except ValueError:
+    print("Invalid input. Please enter a valid number.")
+  except Exception as e:
+    print(f"An unexpected error occurred: {e}")
+  else:
+    deleted_recipe = recipes_list.pop(recipe_to_delete - 1)
+    cursor.execute("SELECT id, name FROM recipes")
+    rows = cursor.fetchall()
+    for row in rows:
+        if row[1] == deleted_recipe['name']:
+            id_to_delete = row[0]
+    print(deleted_recipe)
+    ingredients_to_delete = []
+    for ingredient in deleted_recipe['Ingredients']:
+      for recipe in recipes_list:
+          if ingredient in recipe['Ingredients']:
+            if ingredient in ingredients_to_delete:
+                ingredients_to_delete.remove(ingredient)
+          else:
+              ingredients_to_delete.append(ingredient)
+    for ingredient in ingredients_list:
+        if ingredient in ingredients_to_delete:
+            ingredients_list.remove(ingredient)
+    print(id_to_delete)      
+    cursor.execute("DELETE FROM recipes WHERE id = %s", (id_to_delete,))
+    conn.commit()
+    
+  finally:
+    print("Recipe deleted successfully!\n")
     
 def main_menu():
-    print("//================Recipe App Menu ================\\\\\n")
+    print("\n//================Recipe App Menu ================\\\\\n")
     opt = int(input('''Choose an option (1-8):\n
     1. Show all recipes\n    
     2. Show ingredients\n                           
@@ -237,7 +276,7 @@ def main_menu():
         create_recipe()
         main_menu()
     elif opt == 4:
-        search_recipes_by_name(recipes_list, ingredients_list)
+        search_recipes_by_name(recipes_list)
         main_menu()
     elif opt == 5:
         search_recipes_by_ingredient(ingredients_list, recipes_list)
@@ -246,10 +285,11 @@ def main_menu():
         update_recipe()
         main_menu()
     elif opt == 7:  
-        print("Delete a recipe - Feature coming soon!")
+        delete_recipe()
         main_menu()
     else:
         print("Exiting the Recipe App. Goodbye!") 
+        conn.close()
         exit()
 
 def main():
