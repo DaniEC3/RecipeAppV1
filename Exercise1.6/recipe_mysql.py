@@ -1,4 +1,3 @@
-import pickle
 import mysql.connector
 
 main_data = {}
@@ -24,7 +23,6 @@ def initialize_app():
     )''')
     cursor.execute("SELECT name, ingredients, cook_time, difficulty FROM recipes")
     rows = cursor.fetchall()
-    print(rows)
     for row in rows:
         recipe = {
             "name": row[0],
@@ -117,7 +115,7 @@ def search_recipes_by_name(recipes_list):
     if not found:
         print(f"Recipe '{recipe_name}' not found.")
 
-def search_recipes_by_ingredient(all_ingredients, recipes_list):
+def search_recipes_by_ingredient(all_ingredients):
     index_ingredients = print_sorted_ingredients_list(all_ingredients)
     try:
         number = int(input("Enter the number of the ingredient to search (or press Enter to skip): ").strip())
@@ -279,7 +277,7 @@ def main_menu():
         search_recipes_by_name(recipes_list)
         main_menu()
     elif opt == 5:
-        search_recipes_by_ingredient(ingredients_list, recipes_list)
+        search_recipes_by_ingredient(ingredients_list)
         main_menu()
     elif opt == 6:  
         update_recipe()
