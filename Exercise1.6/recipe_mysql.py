@@ -228,6 +228,7 @@ def delete_recipe():
     deleted_recipe = recipes_list.pop(recipe_to_delete - 1)
     cursor.execute("SELECT id, name FROM recipes")
     rows = cursor.fetchall()
+    id_to_delete = None
     for row in rows:
         if row[1] == deleted_recipe['name']:
             id_to_delete = row[0]
@@ -242,8 +243,7 @@ def delete_recipe():
               ingredients_to_delete.append(ingredient)
     for ingredient in ingredients_list:
         if ingredient in ingredients_to_delete:
-            ingredients_list.remove(ingredient)
-    print(id_to_delete)      
+            ingredients_list.remove(ingredient)     
     cursor.execute("DELETE FROM recipes WHERE id = %s", (id_to_delete,))
     conn.commit()
     
