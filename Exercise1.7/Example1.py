@@ -3,13 +3,16 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy import Column
 from sqlalchemy.types import Integer, String
+from sqlalchemy.orm import sessionmaker
 
 engine = create_engine(
-    "mysql://cf-python:password@localhost/my_database",
+    "mysql+mysqlconnector://cf-python:password@localhost/my_database",
     # echo=True  # optional: logs SQL so you can see what's happening
 )
 Base = declarative_base()
-Base.metadata.create_all(engine)
+Session = sessionmaker(bind=engine)
+session = Session()
+
 
 class Recipe(Base):
     __tablename__ = "practice_recipes"
@@ -23,3 +26,13 @@ class Recipe(Base):
     def __repr__(self):
         return "<Recipe ID: " + str(self.id) + "-" + self.name + ">"
 
+# Create the table in the database
+Base.metadata.create_all(engine)
+
+tea = Recipe(
+    name = "Tea",
+    cooking_time = 5,
+    ingredients = "Tea Leaves, Water, Sugar"
+)
+session.add(tea)
+session.commit()
