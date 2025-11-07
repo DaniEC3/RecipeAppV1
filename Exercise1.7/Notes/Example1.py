@@ -25,7 +25,9 @@ class Recipe(Base):
     difficulty = Column(String(20))
 
     def __repr__(self):
+        # When printing recipe *print(recipe)*
         return "<Recipe ID: " + str(self.id) + "-" + self.name + ">"
+    
 # Create the table in the database
 Base.metadata.create_all(engine)
 tea = Recipe(
